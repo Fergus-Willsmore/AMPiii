@@ -9,6 +9,8 @@
 
 library(ggraph)
 library(statnet)
+library(UserNetR)
+library(intergraph)
 
 data("Moreno")
 gender <- Moreno %v% "gender"

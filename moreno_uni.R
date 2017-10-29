@@ -9,7 +9,11 @@
 
 library(ggraph)
 library(statnet)
+library(UserNetR)
+library(intergraph)
+library(igraph)
 set.seed(37)
+components<-sna::components
 
 # five number summary function
 
@@ -46,35 +50,35 @@ colnames(sum)<-c("Size","Density","Components","Diameter","Clustering")
 ggplot(data=sum, aes(sum$Size)) +
   geom_histogram(bins=20,col="red",fill="green",alpha = .2)+
   labs(x="Size", y="Frequency")+
-  geom_vline(xintercept=summary_Moreno[1],col="blue",alpha=.5)+
+  geom_vline(xintercept=summary_Moreno[1],col="blue",alpha=.5,size=2)+
   theme(axis.text=element_text(size=20),axis.title=element_text(size=20))
 ggsave("moreno_size.pdf", width = 8, height = 8)
 
 ggplot(data=sum, aes(sum$Density)) +
   geom_histogram(bins=20,col="red",fill="green",alpha = .2)+
   labs(x="Density", y="Frequency")+
-  geom_vline(xintercept=summary_Moreno[2],col="blue",alpha=.5)+
+  geom_vline(xintercept=summary_Moreno[2],col="blue",alpha=.5,size=2)+
   theme(axis.text=element_text(size=20),axis.title=element_text(size=20))
 ggsave("moreno_dens.pdf", width = 8, height = 8)
 
 ggplot(data=sum, aes(sum$Components)) +
   geom_histogram(bins=20,col="red",fill="green",alpha = .2)+
   labs(x="Components", y="Frequency")+
-  geom_vline(xintercept=summary_Moreno[3],col="blue",alpha=.5)+
+  geom_vline(xintercept=summary_Moreno[3],col="blue",alpha=.5,size=2)+
   theme(axis.text=element_text(size=20),axis.title=element_text(size=20))
 ggsave("moreno_comp.pdf", width = 8, height = 8)
 
 ggplot(data=sum, aes(sum$Diameter)) +
   geom_histogram(bins=20,col="red",fill="green",alpha = .2)+
   labs(x="Diameter", y="Frequency")+
-  geom_vline(xintercept=summary_Moreno[4],col="blue",alpha=.5)+
+  geom_vline(xintercept=summary_Moreno[4],col="blue",alpha=.5,size=2)+
   theme(axis.text=element_text(size=20),axis.title=element_text(size=20))
 ggsave("moreno_diam.pdf", width = 8, height = 8)
 
 ggplot(data=sum, aes(sum$Clustering))+
   geom_histogram(bins=20,col="red",fill="green",alpha = .2)+
   labs(x="Clustering", y="Frequency")+
-  geom_vline(xintercept=summary_Moreno[5],col="blue",alpha=.5)+
+  geom_vline(xintercept=summary_Moreno[5],col="blue",alpha=.5,size=2)+
   theme(axis.text=element_text(size=20),axis.title=element_text(size=20))
 ggsave("moreno_clust.pdf", width = 8, height = 8)
 

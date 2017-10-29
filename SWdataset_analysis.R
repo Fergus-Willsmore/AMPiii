@@ -12,6 +12,7 @@
 library(tidyverse)
 library(igraph)
 library(ggraph)
+library(stringr)
 degree<-igraph::degree
 data(starwars)
 set.seed(104)
@@ -59,7 +60,7 @@ c<-sapply(starwars$films,function(x){sum(awak %in% x)})
 Tril<-data.frame(Preq=a,Orig=b,Awak=c)
 
 Tril<-apply(Tril,1,function(x){ifelse(sum(x>0)==1,which(x>0),0)})
-Tril<-sapply(Tril,function(x){ifelse(x==1,"Prequel",ifelse(x==2,"Original",ifelse(x==3,"Awakens","Both")))})
+Tril<-sapply(Tril,function(x){ifelse(x==1,"Prequel",ifelse(x==2,"Original",ifelse(x==3,"Awakens","At least two")))})
 order<-sapply(V(graph)$name,function(x){which(starwars$name==x)})
 
 # Add trilogy to network
@@ -69,7 +70,7 @@ V(graph)$Trilogy=Tril[order]
 ## Network Visualisation ##
 
 # define colour palette to be colour blind friendly 
-cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+cbPalette <- c("gray28", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
 
 # define legend titles
 Films<-factor(E(graph)$Films)
@@ -82,8 +83,12 @@ g<-ggraph(graph, layout = 'kk') +
   geom_node_point(aes(size=Degree,shape=Trilogy))+
   theme_graph()+
   theme(plot.title = element_text(hjust = 0.5),legend.text = element_text(size=16),
-        legend.title = element_text(size=20))+
-  scale_edge_color_manual(values=cbPalette)
+        legend.title = element_text(size=16),legend.position = "right")+
+  scale_edge_color_manual(values=cbPalette)+
+  scale_edge_alpha_manual(values = c(0.18,0.3,1,1,1,1))+
+  scale_edge_size_manual(values=c(0.5,5,1,1,5,5))+
+  scale_fill_discrete(breaks = rev(levels(Trilogy)))
+
 plot(g)
 
 # Save coordinates
@@ -125,7 +130,7 @@ node.size[list]<-8
 
 ## Generate edge color variable:
 
-ecol <- rep(adjustcolor("gray40", alpha.f = .05), ecount(graph))
+ecol <- rep(adjustcolor("gray30", alpha.f = .1), ecount(graph))
 
 # find shorest path edges
 name<-V(graph)$name[list]
@@ -146,7 +151,7 @@ ecol[a] <- "orange"
 
 # Generate edge width variable:
 ew <- rep(2, ecount(graph))
-ew[list] <- 4
+ew[list] <- 6
 
 # Generate node color variable:
 vcol <- rep("gray40", vcount(graph))
@@ -155,18 +160,18 @@ vcol[5]<-"red"
 
 # Generate selective label
 label<-rep('',87)
-label[list]<-word(V(graph)$name[list])
+label[c(5,11,82)]<-word(V(graph)$name[c(5,11,82)])
 
 # Match star wars network layout
 l<-layout.norm(cbind(coord$x,coord$y))
 
 # Create plot of betweenness example 
 set.seed(649)
-plot(graph, layout=l,vertex.color=vcol, edge.color=ecol, 
+plot(graph,layout=l,vertex.color=vcol, edge.color=ecol, 
      edge.width=ew, edge.arrow.mode=0, vertex.size=node.size,
-     vertex.label.dist=2,vertex.label.degree=0,vertex.label=label,
-     vertex.label.color="black", vertex.label.family="Helvetica",
-     vertex.label.cex=1.1,vertex.label.font=2)
+     vertex.label.dist=1.5,vertex.label.degree=-pi/2,vertex.label=label,
+     vertex.label.color="blue", vertex.label.family="Helvetica",
+     vertex.label.cex=1.2,vertex.label.font=3)
 
 ### Smaller central network ###
 

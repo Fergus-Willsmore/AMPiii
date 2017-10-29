@@ -51,7 +51,6 @@ plot(TCdiss,usearrows=FALSE,displaylabels=TRUE,
 DSmod0<-ergm(TCdiss~edges,control=control.ergm(seed=40))
 sum0<-summary(DSmod0)
 plogis(coef(DSmod0)) #overall probability of observing a tie
-xtable(tidy(DSmod0)[,c(1:3,5)])
 
 # Scatter plot
 
@@ -68,7 +67,6 @@ summary(DSmod1)
 p_edg <- coef(DSmod1)[1]
 p_yrs <- coef(DSmod1)[3] 
 plogis(p_edg + 5*p_yrs + 10*p_yrs)
-xtable(tidy(DSmod1)[,c(1:3,5)])
 
 ## Dyadic predictors ## 
 
@@ -79,20 +77,17 @@ mixingmatrix(TCdiss,'agency_cat')
 
 DSmod2a <- ergm(TCdiss~edges+nodecov('tob_yrs')+nodematch('agency_lvl'),control=control.ergm(seed=40))
 summary(DSmod2a)
-xtable(tidy(DSmod2a)[,c(1:3,5)])
 
 # Differential homophily
 
 DSmod2b <- ergm(TCdiss~edges + nodecov('tob_yrs')+nodematch('agency_lvl',diff=TRUE),control=control.ergm(seed=40))
 summary(DSmod2b)
-xtable(tidy(DSmod2b)[,c(1:3,5)])
 
 # Detailed homophily
 
 DSmod2c <- ergm(TCdiss~edges + nodecov('tob_yrs') +
                   nodemix('agency_lvl',base=1),
                 control=control.ergm(seed=40))
-xtable(tidy(DSmod2c)[,c(1:3,5)])
 
 # relational predictors
 
