@@ -6,7 +6,7 @@ SessionInfo          -  The session info of R that contains all versions of pack
 
 moreno\_vis          -  This script will produce the visualisation of the moreno dataset with both the kamada-kawai and random algorithm.
 
-univariate\_moreno   -  This script simulates Erdos Renyi models of the moreno network and plots histograms of summary statistics.
+moreno\_uni          -  This script simulates Erdos Renyi models of the moreno network and plots histograms of summary statistics.
 
 TCnetwork\_analysis  -  This script performs complex ERGM analysis of the Tobacco Control dataset. This includes: network visualisation, model building, model selection, goodness-of-fit measures and simulation.
 
