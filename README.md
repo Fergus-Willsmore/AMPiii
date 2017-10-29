@@ -7,7 +7,9 @@ README               -  Read this document.
 
 SessionInfo          -  Contains the version of R as well as all package versions used in the code.
 
-Code                 -  This is a folder containing all code.
+code                 -  This is a folder containing all code.
+
+#### code
 
 moreno\_vis          -  This script will produce the visualisation of the moreno dataset with both the kamada-kawai and random algorithm.
 
